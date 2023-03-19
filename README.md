@@ -4,13 +4,14 @@ Automata in Python!
 
 ## Usage
 
-Here's a Discrete Finite Automaton that accepts words that contain an even number of "a"s and "b"s.
+Here's a Deterministic Finite Automaton that implements a language where words
+either have both even number of "a"s and "b"s or odd number of "a"s and "b"s.
 
 ```python
 from automatata.models.dfa import DFA
 
 evens = DFA(
-    language={"a", "b"},
+    alphabet={"a", "b"},
     edges={
         0: {
             "a": 1,

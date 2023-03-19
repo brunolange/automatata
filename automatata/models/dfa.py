@@ -12,7 +12,7 @@ State = int
 
 @dataclass
 class DFA(Generic[T]):
-    language: set[T]
+    alphabet: set[T]
     edges: Mapping[State, Mapping[T, State]]
     start: State
     goal: set[State]

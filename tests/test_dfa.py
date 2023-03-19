@@ -5,12 +5,12 @@ from automatata.models.dfa import DFA
 
 def test_dfa_model():
     dfa = DFA(
-        language={"a", "b"},
+        alphabet={"a", "b"},
         edges={0: {"a": 0, "b": 1}, 1: {}},
         start=0,
         goal={1},
     )
-    assert dfa.language == {"a", "b"}
+    assert dfa.alphabet == {"a", "b"}
     assert dfa.states == {0, 1}
     assert dfa.start == 0
     assert dfa.goal == {1}
@@ -18,7 +18,7 @@ def test_dfa_model():
 
 def test_one_or_mode_a_and_one_b():
     as_and_one_b = DFA(
-        language={"a", "b"},
+        alphabet={"a", "b"},
         edges={0: {"a": 0, "b": 1}, 1: {}},
         start=0,
         goal={1},
@@ -33,7 +33,7 @@ def test_one_or_mode_a_and_one_b():
 
 def test_even_as_and_bs():
     evens = DFA(
-        language={"a", "b"},
+        alphabet={"a", "b"},
         edges={
             0: {
                 "a": 1,
@@ -59,3 +59,4 @@ def test_even_as_and_bs():
         for p in permutations("a" * i + "b" * i):
             assert evens.valid(p)
     assert evens.valid("aaaabb")
+    assert evens.valid("aaabbb")
