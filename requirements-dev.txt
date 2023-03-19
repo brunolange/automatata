@@ -1,0 +1,7 @@
+black
+build
+setuptools
+wheel
+twine
+pytest
+pre-commit
