@@ -10,7 +10,7 @@ either have both even number of "a"s and "b"s or odd number of "a"s and "b"s.
 ```python
 from automatata.models.dfa import DFA
 
-evens = DFA(
+language = DFA(
     alphabet={"a", "b"},
     edges={
         0: {
