@@ -12,7 +12,7 @@ from automatata.models.dfa import DFA
 
 language = DFA(
     alphabet={"a", "b"},
-    edges={
+    transition={
         0: {
             "a": 1,
             "b": 1,
@@ -23,7 +23,7 @@ language = DFA(
         },
     },
     start=0,
-    goal={0},
+    accept={0},
 )
 
 assert evens.valid("")
