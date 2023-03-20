@@ -5,24 +5,24 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Generic, Hashable, Mapping, Sequence, TypeVar
 
-T = TypeVar("T", bound=Hashable)
+H = TypeVar("H", bound=Hashable)
 
 State = int
 
 
 @dataclass
-class DFA(Generic[T]):
-    alphabet: set[T]
-    edges: Mapping[State, Mapping[T, State]]
+class DFA(Generic[H]):
+    alphabet: set[H]
+    transition: Mapping[State, Mapping[H, State]]
     start: State
-    goal: set[State]
+    accept: set[State]
 
     @property
     def states(self):
-        return set(self.edges)
+        return set(self.transition)
 
-    def valid(self, word: Sequence[T]) -> bool:
+    def valid(self, word: Sequence[H]) -> bool:
         state = self.start
         for letter in word:
-            state = self.edges[state][letter]
-        return state in self.goal
+            state = self.transition[state][letter]
+        return state in self.accept

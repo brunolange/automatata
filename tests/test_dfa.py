@@ -6,22 +6,22 @@ from automatata.models.dfa import DFA
 def test_dfa_model():
     dfa = DFA(
         alphabet={"a", "b"},
-        edges={0: {"a": 0, "b": 1}, 1: {}},
+        transition={0: {"a": 0, "b": 1}, 1: {}},
         start=0,
-        goal={1},
+        accept={1},
     )
     assert dfa.alphabet == {"a", "b"}
     assert dfa.states == {0, 1}
     assert dfa.start == 0
-    assert dfa.goal == {1}
+    assert dfa.accept == {1}
 
 
 def test_one_or_mode_a_and_one_b():
     as_and_one_b = DFA(
         alphabet={"a", "b"},
-        edges={0: {"a": 0, "b": 1}, 1: {}},
+        transition={0: {"a": 0, "b": 1}, 1: {}},
         start=0,
-        goal={1},
+        accept={1},
     )
 
     assert not as_and_one_b.valid("")
@@ -34,7 +34,7 @@ def test_one_or_mode_a_and_one_b():
 def test_even_as_and_bs():
     evens = DFA(
         alphabet={"a", "b"},
-        edges={
+        transition={
             0: {
                 "a": 1,
                 "b": 1,
@@ -45,7 +45,7 @@ def test_even_as_and_bs():
             },
         },
         start=0,
-        goal={0},
+        accept={0},
     )
 
     assert evens.valid("")
