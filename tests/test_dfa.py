@@ -31,8 +31,9 @@ def test_one_or_mode_a_and_one_b():
     assert as_and_one_b.valid("aaaaaaaaaaab")
 
 
-def test_even_as_and_bs():
-    evens = DFA(
+def test_balanced_evens_or_odds():
+    # TODO: hypothesis?
+    balanced = DFA(
         alphabet={"a", "b"},
         transition={
             0: {
@@ -48,15 +49,62 @@ def test_even_as_and_bs():
         accept={0},
     )
 
-    assert evens.valid("")
-    assert not evens.valid("a")
-    assert evens.valid("ab")
-    assert evens.valid("ba")
-    assert not evens.valid("aba")
-    assert not evens.valid("aab")
-    assert not evens.valid("abb")
-    for i in range(6):
-        for p in permutations("a" * i + "b" * i):
-            assert evens.valid(p)
-    assert evens.valid("aaaabb")
-    assert evens.valid("aaabbb")
+    assert balanced.valid("")
+    assert not balanced.valid("a")
+    assert balanced.valid("ab")
+    assert balanced.valid("ba")
+    assert not balanced.valid("aba")
+    assert not balanced.valid("aab")
+    assert not balanced.valid("abb")
+    assert all(
+        balanced.valid(p) for i in range(5) for p in permutations("a" * i + "b" * i)
+    )
+    assert balanced.valid("aaaabb")
+    assert balanced.valid("aaabbb")
+
+
+def test_other_hashable_states():
+    dfa = DFA(
+        alphabet={1, 2, 3},
+        transition={
+            (0, 0, 0): {
+                1: (0, 0, 1),
+                2: (0, 1, 0),
+                3: (0, 1, 1),
+            },
+            (0, 0, 1): {
+                1: (0, 1, 0),
+                2: (0, 1, 1),
+                3: (1, 0, 0),
+            },
+            (0, 1, 0): {
+                1: (0, 1, 1),
+                2: (1, 0, 0),
+                3: (1, 0, 1),
+            },
+            (0, 1, 1): {
+                1: (1, 0, 0),
+                2: (1, 0, 1),
+                3: (1, 1, 0),
+            },
+            (1, 0, 0): {
+                1: (1, 0, 1),
+                2: (1, 1, 0),
+                3: (1, 1, 1),
+            },
+            (1, 0, 1): {
+                1: (1, 1, 0),
+                2: (1, 1, 1),
+            },
+            (1, 1, 0): {
+                1: (1, 1, 1),
+            },
+            (1, 1, 1): {},
+        },
+        start=(0, 0, 0),
+        accept={(1, 1, 1)},
+    )
+    assert dfa.valid([1, 1, 1, 1, 1, 1, 1])
+    assert dfa.valid([1, 1, 1, 1, 1, 2])
+    assert dfa.valid([1, 1, 1, 1, 2, 1])
+    assert dfa.valid([1, 3, 2, 1])
