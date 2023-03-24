@@ -26,15 +26,15 @@ language = DFA(
     accept={0},
 )
 
-assert evens.valid("")
-assert not evens.valid("a")
-assert evens.valid("ab")
-assert evens.valid("ba")
-assert not evens.valid("aba")
-assert not evens.valid("aab")
-assert not evens.valid("abb")
+assert language.valid("")
+assert not language.valid("a")
+assert language.valid("ab")
+assert language.valid("ba")
+assert not language.valid("aba")
+assert not language.valid("aab")
+assert not language.valid("abb")
 for i in range(10):
     for p in permutations("a"*i + "b"+i):
-        assert evens.valid(p)
-assert evens.valid("aaaabb")
+        assert language.valid(p)
+assert language.valid("aaaabb")
 ```
